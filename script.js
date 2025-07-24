@@ -1,45 +1,32 @@
-describe("Transforming Data with Promises", () => {
-  it("should perform all transformations correctly for input 5", () => {
-    cy.visit(baseUrl + "/main.html");
+document.getElementById("btn").addEventListener("click", function () {
+  let input = Number(document.getElementById("ip").value);
+  let output = document.getElementById("output");
+  output.innerText = "";
 
-    cy.get("#ip").type("5");
-    cy.get("#btn").click();
+  function delayedPromise(value, delay) {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(value), delay);
+    });
+  }
 
-    cy.wait(2000);
-    cy.get("#output").should("contain", "Result: 5");
-
-    cy.wait(1000);
-    cy.get("#output").should("contain", "Result: 10");
-
-    cy.wait(1000);
-    cy.get("#output").should("contain", "Result: 7");
-
-    cy.wait(1000);
-    cy.get("#output").should("contain", "Result: 3.5");
-
-    cy.wait(1000);
-    cy.get("#output").should("contain", "Final Result: 13.5");
-  });
-
-  it("should perform all transformations correctly for input 10", () => {
-    cy.visit(baseUrl + "/main.html");
-
-    cy.get("#ip").type("10");
-    cy.get("#btn").click();
-
-    cy.wait(2000);
-    cy.get("#output").should("contain", "Result: 10");
-
-    cy.wait(1000);
-    cy.get("#output").should("contain", "Result: 20");
-
-    cy.wait(1000);
-    cy.get("#output").should("contain", "Result: 17");
-
-    cy.wait(1000);
-    cy.get("#output").should("contain", "Result: 8.5");
-
-    cy.wait(1000);
-    cy.get("#output").should("contain", "Final Result: 18.5");
-  });
+  delayedPromise(input, 2000)
+    .then((res) => {
+      output.innerText = Result: ${res};
+      return delayedPromise(res * 2, 1000);
+    })
+    .then((res) => {
+      output.innerText = Result: ${res};
+      return delayedPromise(res - 3, 1000);
+    })
+    .then((res) => {
+      output.innerText = Result: ${res};
+      return delayedPromise(res / 2, 1000);
+    })
+    .then((res) => {
+      output.innerText = Result: ${res};
+      return delayedPromise(res + 10, 1000);
+    })
+    .then((res) => {
+      output.innerText = Final Result: ${res};
+    });
 });
